@@ -1,0 +1,188 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="RedmineClient.IssuePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="True"
+    DataContext="{Binding Source={StaticResource Locator}, Path=Issue}">
+    <shell:SystemTray.ProgressIndicator>
+        <shell:ProgressIndicator IsIndeterminate="{Binding ShowProgressBar}" IsVisible="True"/>
+    </shell:SystemTray.ProgressIndicator>
+
+
+    <!--<phone:PhoneApplicationPage.Resources>
+        <DataTemplate x:Key="DoneRationFullItemTemplate">
+            <TextBlock Text="{Binding}" FontSize="{StaticResource PhoneFontSizeLarge}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="DoneRationFullHeaderTemplate">
+            <TextBlock Text="Done (%)" Foreground="{StaticResource PhoneDisabledBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"/>
+        </DataTemplate>
+    </phone:PhoneApplicationPage.Resources>
+    <toolkit:ListPicker Margin="12 5" 
+                                            ExpansionMode="FullScreenOnly" 
+                                            FullModeItemTemplate="{StaticResource DoneRationFullItemTemplate}" 
+                                            FontSize="{StaticResource PhoneFontSizeMediumLarge}" 
+                                            ItemsSource="{Binding DoneRationAvailable}" 
+                                            SelectedItem="{Binding SelectedIssue.DoneRation}"
+                                            HeaderTemplate="{StaticResource DoneRationFullHeaderTemplate}">
+    </toolkit:ListPicker>-->
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <!--Pivot Control-->
+        <phone:Pivot Title="{Binding SelectedIssue.Project.Name}">
+            <!--Pivot item details-->
+            <phone:PivotItem Header="details">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <Grid>
+                        <StackPanel>
+                            <TextBlock Margin="12 5 12 0" TextWrapping="Wrap" Text="{Binding SelectedIssue.Subject}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeLarge}"></TextBlock>
+                            <TextBlock Margin="12 5 12 0" Text="{Binding SelectedIssue.TrackerWithPercentString}" Foreground="{StaticResource PhoneAccentBrush}" FontSize="{StaticResource PhoneFontSizeMedium}"></TextBlock>
+                            <ProgressBar Value="{Binding SelectedIssue.DoneRatio}" IsIndeterminate="False" Maximum="100" Margin="0 5" Background="{StaticResource PhoneDisabledBrush}" Foreground="{StaticResource PhoneAccentBrush}"></ProgressBar>
+                            <TextBlock  Margin="12 5 12 0" Text="done" Foreground="{StaticResource PhoneDisabledBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"/>
+                            <StackPanel Orientation="Horizontal" Margin="12 5 12 0">
+                                <TextBlock Text="{Binding SelectedIssue.DoneRatio}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
+                                <TextBlock Text="%" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
+                            </StackPanel>
+                            <TextBlock  Margin="12 5 12 0" Text="status" Foreground="{StaticResource PhoneDisabledBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"/>
+                            <TextBlock Margin="12 5 12 0" Text="{Binding SelectedIssue.Status.Name}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
+
+                            <TextBlock  Margin="12 5 12 0" Text="priority" Foreground="{StaticResource PhoneDisabledBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"/>
+                            <TextBlock Margin="12 5 12 0" Text="{Binding SelectedIssue.Priority.Name}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
+
+                            <TextBlock  Margin="12 5 12 0" Text="assigne" Foreground="{StaticResource PhoneDisabledBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"/>
+                            <TextBlock Margin="12 5 12 0" Text="{Binding SelectedIssue.AssignedTo.Name}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
+
+                            <TextBlock  Margin="12 5 12 0" Text="start date" Foreground="{StaticResource PhoneDisabledBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"/>
+                            <TextBlock Margin="12 5 12 0" Text="{Binding SelectedIssue.StartDateString}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
+
+                            <TextBlock  Margin="12 5 12 0" Text="due date" Foreground="{StaticResource PhoneDisabledBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"/>
+                            <TextBlock Margin="12 5 12 0" Text="{Binding SelectedIssue.DueDateString}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
+
+                            <TextBlock  Margin="12 5 12 0" Text="author" Foreground="{StaticResource PhoneDisabledBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"/>
+                            <TextBlock Margin="12 5 12 0" Text="{Binding SelectedIssue.Author.Name}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
+
+                            <TextBlock  Margin="12 5 12 0" Text="create date" Foreground="{StaticResource PhoneDisabledBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"/>
+                            <TextBlock Margin="12 5 12 0" Text="{Binding SelectedIssue.CreatedOnString}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
+
+                            <TextBlock  Margin="12 5 12 0" Text="update date" Foreground="{StaticResource PhoneDisabledBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"/>
+                            <TextBlock Margin="12 5 12 10" Text="{Binding SelectedIssue.UpdatedOnString}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
+                        </StackPanel>
+                    </Grid>
+                </ScrollViewer>
+            </phone:PivotItem>
+
+            <!--Pivot item description-->
+            <phone:PivotItem Header="description">
+                <Grid>
+                        <ListBox Margin="12 0" ItemsSource="{Binding SelectedIssue.DescriptionArray}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextWrapping="Wrap" Text="{Binding}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+            </phone:PivotItem>
+
+            <!--Pivot item history-->
+            <phone:PivotItem Header="history">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <Grid>
+                        <StackPanel Margin="12 0">
+                            <phone:LongListSelector ItemsSource="{Binding History}">
+                                <phone:LongListSelector.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Vertical" Margin="0 0 0 10">
+                                            <StackPanel Orientation="Vertical">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="Updated by " Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                    <TextBlock Text="{Binding User.Name}" Foreground="{StaticResource PhoneAccentBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                </StackPanel>
+                                                <TextBlock Text="{Binding UpdatedOnString}" TextWrapping="Wrap" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                            </StackPanel>
+                                            <StackPanel Margin="10 0" Orientation="Vertical">
+                                                <ListBox ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Details}">
+                                                    <ListBox.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <Grid>
+                                                                <StackPanel Orientation="Horizontal" Visibility="{Binding ShowDoneRatio}" >
+                                                                    <TextBlock Text="•% Done" FontWeight="Bold" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                    <TextBlock Text=" changed from " Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                    <TextBlock Text="{Binding OldValue}" Foreground="{StaticResource PhoneAccentBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                    <TextBlock Text=" to " Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                    <TextBlock Text="{Binding NewValue}" TextWrapping="Wrap"  Foreground="{StaticResource PhoneAccentBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                </StackPanel>
+                                                                <StackPanel Orientation="Horizontal" Visibility="{Binding ShowPriority}">
+                                                                    <TextBlock Text="•Priority" FontWeight="Bold" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                    <TextBlock Text=" changed from " Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                    <TextBlock Text="{Binding OldPriority}" Foreground="{StaticResource PhoneAccentBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                    <TextBlock Text=" to " Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                    <TextBlock Text="{Binding NewPriority}"  Foreground="{StaticResource PhoneAccentBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                </StackPanel>
+                                                                <StackPanel Orientation="Horizontal" Visibility="{Binding ShowStatus}">
+                                                                    <TextBlock Text="•Status" FontWeight="Bold" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                    <TextBlock Text=" changed from " Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                    <TextBlock Text="{Binding OldStatus}" Foreground="{StaticResource PhoneAccentBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                    <TextBlock Text=" to " Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                    <TextBlock Text="{Binding NewStatus}"  Foreground="{StaticResource PhoneAccentBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                </StackPanel>
+                                                                <StackPanel Orientation="Vertical" Visibility="{Binding ShowAssign}">
+                                                                    <StackPanel Orientation="Horizontal" >
+                                                                        <TextBlock Text="•Assigne" FontWeight="Bold" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                        <TextBlock Text=" changed from " Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                        <TextBlock Text="{Binding OldAssignName}" Foreground="{StaticResource PhoneAccentBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                    </StackPanel>
+                                                                    <StackPanel Orientation="Horizontal">
+                                                                        <TextBlock Text="to " Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                        <TextBlock Text="{Binding NewAssignName}"  Foreground="{StaticResource PhoneAccentBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                    </StackPanel>
+                                                                </StackPanel>
+                                                                <StackPanel Orientation="Horizontal" Visibility="{Binding ShowSetedAssign}">
+                                                                    <TextBlock Text="•Assigne" FontWeight="Bold" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                    <TextBlock Text=" set to " Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                    <TextBlock Text="{Binding NewAssignName}" Foreground="{StaticResource PhoneAccentBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                </StackPanel>
+                                                                <StackPanel Orientation="Horizontal" Visibility="{Binding ShowDeletedAssign}">
+                                                                    <TextBlock Text="•Assigne" FontWeight="Bold" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                    <TextBlock Text=" deleted (" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                    <TextBlock Text="{Binding OldAssignName}" Foreground="{StaticResource PhoneAccentBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                    <TextBlock Text=")" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                </StackPanel>
+                                                                <StackPanel Orientation="Horizontal" Visibility="{Binding ShowSetEstimate}">
+                                                                    <TextBlock Text="•Estimated time" FontWeight="Bold" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                    <TextBlock Text=" set to " Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                    <TextBlock Text="{Binding NewValue}" Foreground="{StaticResource PhoneAccentBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                </StackPanel>
+                                                                <StackPanel Orientation="Horizontal" Visibility="{Binding ShowAttachment}">
+                                                                    <TextBlock Text="•File " FontWeight="Bold" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                    <TextBlock Text="{Binding NewValue}" Foreground="{StaticResource PhoneAccentBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                    <TextBlock Text=" added" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                </StackPanel>
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </ListBox.ItemTemplate>
+                                                </ListBox>
+                                            </StackPanel>
+                                            <TextBlock TextWrapping="Wrap" Text="{Binding Notes}" Foreground="{StaticResource PhoneDisabledBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </phone:LongListSelector.ItemTemplate>
+                            </phone:LongListSelector>
+                        </StackPanel>
+                    </Grid>
+                </ScrollViewer>
+            </phone:PivotItem>
+        </phone:Pivot>
+    </Grid>
+
+</phone:PhoneApplicationPage>
