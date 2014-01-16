@@ -40,6 +40,26 @@ namespace RedmineClient.ViewModels.ViewModel
         private readonly IAccountRepository accountRepository;
 
         /// <summary>
+        /// The limit.
+        /// </summary>
+        private int limit;
+
+        /// <summary>
+        /// The offset.
+        /// </summary>
+        private int offset;
+
+        /// <summary>
+        /// The loaded Issues.
+        /// </summary>
+        private int loadedIssues;
+
+        /// <summary>
+        /// The loaded projects.
+        /// </summary>
+        private int loadedProjects;
+
+        /// <summary>
         /// The unauthorized.
         /// </summary>
         private bool unauthorized;
