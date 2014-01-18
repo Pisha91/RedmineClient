@@ -84,14 +84,14 @@
             <!--Pivot item description-->
             <phone:PivotItem Header="description">
                 <Grid>
-                        <ListBox Margin="12 0" ItemsSource="{Binding SelectedIssue.DescriptionArray}">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock TextWrapping="Wrap" Text="{Binding}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </Grid>
+                    <ListBox Margin="12 0" ItemsSource="{Binding SelectedIssue.DescriptionArray}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock TextWrapping="Wrap" Text="{Binding}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
             </phone:PivotItem>
 
             <!--Pivot item history-->
@@ -167,6 +167,15 @@
                                                                     <TextBlock Text="•File " FontWeight="Bold" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
                                                                     <TextBlock Text="{Binding NewValue}" Foreground="{StaticResource PhoneAccentBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
                                                                     <TextBlock Text=" added" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                </StackPanel>
+                                                                <StackPanel Orientation="Vertical" Visibility="{Binding ShowSubject}">
+                                                                    <StackPanel Orientation="Horizontal">
+                                                                        <TextBlock Text="•Subject" FontWeight="Bold" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                        <TextBlock Text=" changed from " Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                    </StackPanel>
+                                                                    <TextBlock Text="{Binding OldValue}" TextWrapping="Wrap" Foreground="{StaticResource PhoneAccentBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                    <TextBlock Text=" to " Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                                                                    <TextBlock Text="{Binding NewValue}" TextWrapping="Wrap" Foreground="{StaticResource PhoneAccentBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
                                                                 </StackPanel>
                                                             </Grid>
                                                         </DataTemplate>

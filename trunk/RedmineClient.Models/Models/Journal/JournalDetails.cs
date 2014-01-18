@@ -167,6 +167,19 @@
             }
         }
 
+        public string ShowSubject
+        {
+            get
+            {
+                if (this.Property.Equals("attr") && this.Name.Equals("subject") && !string.IsNullOrEmpty(this.NewValue) && !string.IsNullOrEmpty(this.OldValue))
+                {
+                    return "Visible";
+                }
+
+                return "Collapsed";
+            }
+        }
+
 
         /// <summary>
         /// Gets or sets the old status.
