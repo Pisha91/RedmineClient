@@ -48,7 +48,7 @@
             <phone:PivotItem Header="my page">
                 <!--Double line list with text wrapping-->
                 <phone:LongListSelector Margin="0,0,-12,0" ItemsSource="{Binding Issues}">
-                    <phone:LongListSelector.ItemTemplate>
+                   <phone:LongListSelector.ItemTemplate>
                         <DataTemplate>
                             <Grid  Margin="0,0,0,17" toolkit:TiltEffect.IsTiltEnabled="true">
                                 <StackPanel>
@@ -88,6 +88,11 @@
             <!--Pivot item two-->
             <phone:PivotItem Header="projects">
                 <phone:LongListSelector Margin="0,0,-12,0" ItemsSource="{Binding Projects}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="ItemRealized">
+                            <command:EventToCommand  Command="{Binding ProjectsItemRealizedCommand, Mode=TwoWay}" PassEventArgsToCommand="True"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                     <phone:LongListSelector.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="12,0" toolkit:TiltEffect.IsTiltEnabled="true">

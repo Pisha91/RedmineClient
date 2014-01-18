@@ -35,10 +35,16 @@
         /// <summary>
         /// The get projects.
         /// </summary>
+        /// <param name="limit">
+        /// The limit.
+        /// </param>
+        /// <param name="offset">
+        /// The offset.
+        /// </param>
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public async Task<RepositoryResponse<List<Project>>> GetProjects()
+        public async Task<RepositoryResponse<List<Project>>> GetProjects(int limit, int offset)
         {
             var userCredentials = this.UserCredentialsRepository.Get();
             if (userCredentials != null)
@@ -50,7 +56,7 @@
                     Password = userCredentials.Password
                 };
 
-                var response = await this.WebClient.Get("projects.json", requestModel);
+                var response = await this.WebClient.Get(string.Format("projects.json?limit={0}&offset={1}", limit, offset), requestModel);
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsStringAsync();
@@ -59,7 +65,8 @@
                     return new RepositoryResponse<List<Project>>
                     {
                         ResponseObject = issueResponse.Projects,
-                        StatusCode = HttpStatusCode.OK
+                        StatusCode = HttpStatusCode.OK,
+                        TotalCount = issueResponse.TotalCount
                     };
                 }
 

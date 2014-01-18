@@ -25,10 +25,16 @@
         /// <param name="userId">
         /// The user id.
         /// </param>
+        /// <param name="limit">
+        /// The limit.
+        /// </param>
+        /// <param name="offset">
+        /// The offset.
+        /// </param>
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        Task<RepositoryResponse<List<Issue>>> GetIssues(int userId);
+        Task<RepositoryResponse<List<Issue>>> GetIssues(int userId, int limit, int offset);
 
         /// <summary>
         /// The get issue.

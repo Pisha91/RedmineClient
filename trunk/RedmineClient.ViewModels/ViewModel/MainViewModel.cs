@@ -3,6 +3,7 @@ namespace RedmineClient.ViewModels.ViewModel
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Linq;
     using System.Net;
     using System.Windows;
     using System.Windows.Input;
@@ -10,6 +11,8 @@ namespace RedmineClient.ViewModels.ViewModel
     using GalaSoft.MvvmLight;
     using GalaSoft.MvvmLight.Command;
     using GalaSoft.MvvmLight.Messaging;
+
+    using Microsoft.Phone.Controls;
 
     using RedmineClient.Messanger.Messages.Issue;
     using RedmineClient.Messanger.Messages.LogOn;
@@ -45,19 +48,24 @@ namespace RedmineClient.ViewModels.ViewModel
         private int limit;
 
         /// <summary>
-        /// The offset.
-        /// </summary>
-        private int offset;
-
-        /// <summary>
         /// The loaded Issues.
         /// </summary>
-        private int loadedIssues;
+        private int loadedIssuesCount;
+
+        /// <summary>
+        /// The total issues count.
+        /// </summary>
+        private int issuesTotalCount;
 
         /// <summary>
         /// The loaded projects.
         /// </summary>
-        private int loadedProjects;
+        private int loadedProjectsCount;
+
+        /// <summary>
+        /// The total projects count.
+        /// </summary>
+        private int projectsTotalCount;
 
         /// <summary>
         /// The unauthorized.
@@ -82,12 +90,22 @@ namespace RedmineClient.ViewModels.ViewModel
         /// <summary>
         /// The projects.
         /// </summary>
-        private ObservableCollection<Project> projects; 
+        private ObservableCollection<Project> projects;
 
         /// <summary>
         /// The issue tap command.
         /// </summary>
         private RelayCommand<Issue> issueTapCommand;
+
+        /// <summary>
+        /// The project item realized.
+        /// </summary>
+        private RelayCommand<ItemRealizationEventArgs> projectsItemRealized;
+
+        /// <summary>
+        /// The issues item realized.
+        /// </summary>
+        private RelayCommand<ItemRealizationEventArgs> issuesItemRealized;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainViewModel"/> class.
@@ -181,15 +199,95 @@ namespace RedmineClient.ViewModels.ViewModel
         }
 
         /// <summary>
+        /// Gets the news item realized command.
+        /// </summary>
+        public ICommand ProjectsItemRealizedCommand
+        {
+            get
+            {
+                return this.projectsItemRealized
+                       ?? (this.projectsItemRealized = new RelayCommand<ItemRealizationEventArgs>(this.ProjectsItemRealized));
+            }
+        }
+
+        /// <summary>
+        /// Gets the issues item realized command.
+        /// </summary>
+        public ICommand IssuesItemRealizedCommand
+        {
+            get
+            {
+                return this.IssuesItemRealizedCommand
+                       ?? (this.issuesItemRealized = new RelayCommand<ItemRealizationEventArgs>(this.IssuesItemRealized));
+            }
+        }
+
+        /// <summary>
+        /// The projects item realized.
+        /// </summary>
+        /// <param name="eventArgs">
+        /// The event args.
+        /// </param>
+        private void ProjectsItemRealized(ItemRealizationEventArgs eventArgs)
+        {
+            if (this.projects != null && this.projectsTotalCount > this.projects.Count && !this.loadingProjects)
+            {
+                if (eventArgs.ItemKind == LongListSelectorItemKind.Item)
+                {
+                    var newsDisplayModel = eventArgs.Container.Content as Project;
+                    if (this.projects.IndexOf(newsDisplayModel) > this.Projects.Count - this.Projects.Count / 2)
+                    {
+                        this.GetProjects();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// The issues item realized.
+        /// </summary>
+        /// <param name="eventArgs">
+        /// The event args.
+        /// </param>
+        private void IssuesItemRealized(ItemRealizationEventArgs eventArgs)
+        {
+            if (this.issues != null && this.issuesTotalCount > this.issues.Count && !this.loadingIssues)
+            {
+                if (eventArgs.ItemKind == LongListSelectorItemKind.Item)
+                {
+                    var issue = eventArgs.Container.Content as Issue;
+                    if (this.issues.IndexOf(issue) > this.issues.Count - this.issues.Count / 2)
+                    {
+                        this.GetIssues();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// The set issues.
         /// </summary>
         private async void GetIssues()
         {
+            this.loadingIssues = true;
             RepositoryResponse<User> userResponse = await this.accountRepository.GetCurrentUser();
             if (userResponse.StatusCode == HttpStatusCode.OK)
             {
-                RepositoryResponse<List<Issue>> issuesResponse = await this.issueRepository.GetIssues(userResponse.ResponseObject.Id);
-                this.issues = new ObservableCollection<Issue>(issuesResponse.ResponseObject);
+                RepositoryResponse<List<Issue>> issuesResponse = await this.issueRepository.GetIssues(userResponse.ResponseObject.Id, this.limit, this.loadedIssuesCount);
+                if (this.issues == null)
+                {
+                    this.issues = new ObservableCollection<Issue>(issuesResponse.ResponseObject);
+                    this.issuesTotalCount = issuesResponse.TotalCount;
+                }
+                else
+                {
+                    foreach (var issue in issuesResponse.ResponseObject)
+                    {
+                        this.issues.Add(issue);
+                    }
+                }
+
+                this.loadedIssuesCount = this.issues.Count;
             }
             else if (userResponse.StatusCode == HttpStatusCode.Unauthorized)
             {
@@ -210,10 +308,24 @@ namespace RedmineClient.ViewModels.ViewModel
         /// </summary>
         private async void GetProjects()
         {
-            RepositoryResponse<List<Project>> projectResponse = await this.projectRepository.GetProjects();
+            this.loadingProjects = true;
+            RepositoryResponse<List<Project>> projectResponse = await this.projectRepository.GetProjects(this.limit, this.loadedProjectsCount);
             if (projectResponse.StatusCode == HttpStatusCode.OK)
             {
-                this.projects = new ObservableCollection<Project>(projectResponse.ResponseObject);
+                if (this.projects == null)
+                {
+                    this.projects = new ObservableCollection<Project>(projectResponse.ResponseObject);
+                    this.projectsTotalCount = projectResponse.TotalCount;
+                }
+                else
+                {
+                    foreach (var project in projectResponse.ResponseObject)
+                    {
+                        this.projects.Add(project);
+                    }
+                }
+
+                this.loadedProjectsCount = this.projects.Count;
             }
             else if (projectResponse.StatusCode == HttpStatusCode.Unauthorized)
             {
@@ -245,8 +357,11 @@ namespace RedmineClient.ViewModels.ViewModel
         /// </summary>
         private void SetLoadingParameters()
         {
-            this.loadingIssues = true;
-            this.loadingProjects = true;
+            this.limit = 25;
+            this.loadedIssuesCount = 0;
+            this.loadedProjectsCount = 0;
+            this.projectsTotalCount = 25;
+            this.issuesTotalCount = 25;
         }
     }
 }

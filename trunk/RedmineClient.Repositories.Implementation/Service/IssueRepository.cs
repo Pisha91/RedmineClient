@@ -1,7 +1,6 @@
 ﻿namespace RedmineClient.Repositories.Implementation.Service
 {
     using System.Collections.Generic;
-    using System.Linq;
     using System.Net;
     using System.Threading.Tasks;
 
@@ -60,7 +59,8 @@
                     return new RepositoryResponse<List<Issue>>
                                {
                                    ResponseObject = issueResponse.Issues,
-                                   StatusCode = HttpStatusCode.OK
+                                   StatusCode = HttpStatusCode.OK,
+                                   TotalCount = issueResponse.TotalCount
                                };
                 }
 
@@ -76,10 +76,16 @@
         /// <param name="userId">
         /// The user id.
         /// </param>
+        /// <param name="limit">
+        /// The limit.
+        /// </param>
+        /// <param name="offset">
+        /// The offset.
+        /// </param>
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public async Task<RepositoryResponse<List<Issue>>> GetIssues(int userId)
+        public async Task<RepositoryResponse<List<Issue>>> GetIssues(int userId, int limit, int offset)
         {
             var userCredentials = this.UserCredentialsRepository.Get();
             if (userCredentials != null)
@@ -91,7 +97,7 @@
                                            Password = userCredentials.Password
                                        };
 
-                var response = await this.WebClient.Get(string.Format("issues.json?assigned_to_id={0}", userId), requestModel);
+                var response = await this.WebClient.Get(string.Format("issues.json?assigned_to_id={0}&limit={1}&offset={2}", userId, limit, offset), requestModel);
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsStringAsync();
@@ -100,7 +106,8 @@
                     return new RepositoryResponse<List<Issue>>
                                {
                                    ResponseObject = issueResponse.Issues,
-                                   StatusCode = HttpStatusCode.OK
+                                   StatusCode = HttpStatusCode.OK,
+                                   TotalCount = issueResponse.TotalCount
                                };
                 }
 
