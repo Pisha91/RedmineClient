@@ -3,6 +3,7 @@ namespace RedmineClient.ViewModels.ViewModel
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Linq;
     using System.Net;
     using System.Windows;
     using System.Windows.Input;
@@ -15,6 +16,7 @@ namespace RedmineClient.ViewModels.ViewModel
 
     using RedmineClient.Messanger.Messages.Issue;
     using RedmineClient.Messanger.Messages.LogOn;
+    using RedmineClient.Messanger.Messages.Project;
     using RedmineClient.Models.Models.Issues;
     using RedmineClient.Models.Models.Projects;
     using RedmineClient.Models.Models.Users;
@@ -97,6 +99,11 @@ namespace RedmineClient.ViewModels.ViewModel
         private RelayCommand<Issue> issueTapCommand;
 
         /// <summary>
+        /// The project tap command.
+        /// </summary>
+        private RelayCommand<Project> projectTapCommand;
+
+        /// <summary>
         /// The project item realized.
         /// </summary>
         private RelayCommand<ItemRealizationEventArgs> projectsItemRealized;
@@ -131,17 +138,6 @@ namespace RedmineClient.ViewModels.ViewModel
             this.SetLoadingParameters();
             this.GetIssues();
             this.GetProjects();
-        }
-
-        /// <summary>
-        /// Gets the issue tap command.
-        /// </summary>
-        public ICommand IssueTapCommand
-        {
-            get
-            {
-                return this.issueTapCommand ?? (this.issueTapCommand = new RelayCommand<Issue>(this.IssueTap));
-            }
         }
 
         /// <summary>
@@ -198,6 +194,28 @@ namespace RedmineClient.ViewModels.ViewModel
         }
 
         /// <summary>
+        /// Gets the issue tap command.
+        /// </summary>
+        public ICommand IssueTapCommand
+        {
+            get
+            {
+                return this.issueTapCommand ?? (this.issueTapCommand = new RelayCommand<Issue>(this.IssueTap));
+            }
+        }
+
+        /// <summary>
+        /// Gets the project tap command.
+        /// </summary>
+        public ICommand ProjectTapCommand
+        {
+            get
+            {
+                return this.projectTapCommand ?? (this.projectTapCommand = new RelayCommand<Project>(this.ProjectTap));
+            }
+        }
+
+        /// <summary>
         /// Gets the news item realized command.
         /// </summary>
         public ICommand ProjectsItemRealizedCommand
@@ -216,7 +234,7 @@ namespace RedmineClient.ViewModels.ViewModel
         {
             get
             {
-                return this.IssuesItemRealizedCommand
+                return this.issuesItemRealized
                        ?? (this.issuesItemRealized = new RelayCommand<ItemRealizationEventArgs>(this.IssuesItemRealized));
             }
         }
@@ -233,8 +251,8 @@ namespace RedmineClient.ViewModels.ViewModel
             {
                 if (eventArgs.ItemKind == LongListSelectorItemKind.Item)
                 {
-                    var newsDisplayModel = eventArgs.Container.Content as Project;
-                    if (this.projects.IndexOf(newsDisplayModel) > this.Projects.Count - this.Projects.Count / 2)
+                    var project = eventArgs.Container.Content as Project;
+                    if (this.projects.IndexOf(this.projects.First(x => x.Id == project.Id)) >= this.Projects.Count - this.Projects.Count / 2)
                     {
                         this.GetProjects();
                     }
@@ -255,7 +273,7 @@ namespace RedmineClient.ViewModels.ViewModel
                 if (eventArgs.ItemKind == LongListSelectorItemKind.Item)
                 {
                     var issue = eventArgs.Container.Content as Issue;
-                    if (this.issues.IndexOf(issue) > this.issues.Count - this.issues.Count / 2)
+                    if (this.issues.IndexOf(this.issues.First(x => x.Id == issue.Id)) >= this.issues.Count - this.issues.Count / 2)
                     {
                         this.GetIssues();
                     }
@@ -264,15 +282,39 @@ namespace RedmineClient.ViewModels.ViewModel
         }
 
         /// <summary>
+        /// The issue tap.
+        /// </summary>
+        /// <param name="selectedIssue">
+        /// The selected issue.
+        /// </param>
+        private void IssueTap(Issue selectedIssue)
+        {
+            Messenger.Default.Send(new IssueMessage(selectedIssue, new Uri("/IssuePage.xaml", UriKind.Relative)));
+        }
+
+        /// <summary>
+        /// The project tap.
+        /// </summary>
+        /// <param name="selectedProject">
+        /// The selected project.
+        /// </param>
+        private void ProjectTap(Project selectedProject)
+        {
+            Messenger.Default.Send(new ProjectMessage(selectedProject, new Uri("/ProjectPage.xaml", UriKind.Relative)));
+        }
+
+        /// <summary>
         /// The set issues.
         /// </summary>
         private async void GetIssues()
         {
             this.loadingIssues = true;
+            this.RaisePropertyChanged("ShowProgressBar");
+
             RepositoryResponse<User> userResponse = await this.accountRepository.GetCurrentUser();
             if (userResponse.StatusCode == HttpStatusCode.OK)
             {
-                RepositoryResponse<List<Issue>> issuesResponse = await this.issueRepository.GetIssues(userResponse.ResponseObject.Id, this.limit, this.loadedIssuesCount);
+                RepositoryResponse<List<Issue>> issuesResponse = await this.issueRepository.GetIssuesByUserId(userResponse.ResponseObject.Id, this.limit, this.loadedIssuesCount);
                 if (this.issues == null)
                 {
                     this.issues = new ObservableCollection<Issue>(issuesResponse.ResponseObject);
@@ -308,6 +350,8 @@ namespace RedmineClient.ViewModels.ViewModel
         private async void GetProjects()
         {
             this.loadingProjects = true;
+            this.RaisePropertyChanged("ShowProgressBar");
+
             RepositoryResponse<List<Project>> projectResponse = await this.projectRepository.GetProjects(this.limit, this.loadedProjectsCount);
             if (projectResponse.StatusCode == HttpStatusCode.OK)
             {
@@ -338,17 +382,6 @@ namespace RedmineClient.ViewModels.ViewModel
             this.loadingProjects = false;
             this.RaisePropertyChanged("Projects");
             this.RaisePropertyChanged("ShowProgressBar");
-        }
-
-        /// <summary>
-        /// The issue tap.
-        /// </summary>
-        /// <param name="selectedIssue">
-        /// The selected issue.
-        /// </param>
-        private void IssueTap(Issue selectedIssue)
-        {
-            Messenger.Default.Send(new IssueMessage(selectedIssue, new Uri("/IssuePage.xaml", UriKind.Relative)));
         }
 
         /// <summary>

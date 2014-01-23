@@ -8,6 +8,7 @@
     using RedmineClient.Messanger.Messages.Issue;
     using RedmineClient.Messanger.Messages.LogOn;
     using RedmineClient.Messanger.Messages.Main;
+    using RedmineClient.Messanger.Messages.Project;
 
     /// <summary>
     /// The page messenger.
@@ -43,6 +44,14 @@
                 message =>
                     {
                         PhoneApplicationService.Current.State["selectedIssue"] = message.SelectedIssue;
+                        this.rootFrame.Navigate(message.Uri);
+                    });
+
+            Messenger.Default.Register<ProjectMessage>(
+                this,
+                message =>
+                    {
+                        PhoneApplicationService.Current.State["selectedProject"] = message.SelectedProject;
                         this.rootFrame.Navigate(message.Uri);
                     });
         }

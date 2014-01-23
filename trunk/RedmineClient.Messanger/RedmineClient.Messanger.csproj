@@ -91,6 +91,7 @@
     <Compile Include="Messages\Issue\IssueMessage.cs" />
     <Compile Include="Messages\LogOn\LogOnMessage.cs" />
     <Compile Include="Messages\Main\MainMessage.cs" />
+    <Compile Include="Messages\Project\ProjectMessage.cs" />
     <Compile Include="Messanger\PageMessenger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

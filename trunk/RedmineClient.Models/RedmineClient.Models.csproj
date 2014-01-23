@@ -87,6 +87,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Models\Attachments\Attachment.cs" />
     <Compile Include="Models\Common\Label.cs" />
     <Compile Include="Models\Projects\Project.cs" />
     <Compile Include="Models\Projects\ProjectsResponse.cs" />

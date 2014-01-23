@@ -34,7 +34,24 @@
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        Task<RepositoryResponse<List<Issue>>> GetIssues(int userId, int limit, int offset);
+        Task<RepositoryResponse<List<Issue>>> GetIssuesByUserId(int userId, int limit, int offset);
+
+        /// <summary>
+        /// The get issues.
+        /// </summary>
+        /// <param name="projectId">
+        /// The project Id.
+        /// </param>
+        /// <param name="limit">
+        /// The limit.
+        /// </param>
+        /// <param name="offset">
+        /// The offset.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
+        Task<RepositoryResponse<List<Issue>>> GetIssuesByProjectId(int projectId, int limit, int offset);
 
         /// <summary>
         /// The get issue.

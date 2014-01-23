@@ -97,9 +97,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="IocContainers\CommonModule.cs" />
-    <Compile Include="IocContainers\DesignTimeModule.cs" />
-    <Compile Include="IocContainers\RunTimeModule.cs" />
+    <Compile Include="NinjectModules\CommonModule.cs" />
+    <Compile Include="NinjectModules\DesignTimeModule.cs" />
+    <Compile Include="NinjectModules\RunTimeModule.cs" />
     <Compile Include="IssuePage.xaml.cs">
       <DependentUpon>IssuePage.xaml</DependentUpon>
     </Compile>
@@ -109,6 +109,9 @@
     </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectPage.xaml.cs">
+      <DependentUpon>ProjectPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AppResources.Designer.cs">
@@ -132,6 +135,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ProjectPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

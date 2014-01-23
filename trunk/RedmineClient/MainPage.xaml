@@ -1,4 +1,5 @@
 ﻿<phone:PhoneApplicationPage
+    x:Name="ApplicationPage"
     x:Class="RedmineClient.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -9,6 +10,7 @@
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP8"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -19,7 +21,6 @@
     <shell:SystemTray.ProgressIndicator>
         <shell:ProgressIndicator IsIndeterminate="{Binding ShowProgressBar}" IsVisible="True"/>
     </shell:SystemTray.ProgressIndicator>
-
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
 
@@ -48,16 +49,21 @@
             <phone:PivotItem Header="my page">
                 <!--Double line list with text wrapping-->
                 <phone:LongListSelector Margin="0,0,-12,0" ItemsSource="{Binding Issues}">
-                   <phone:LongListSelector.ItemTemplate>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="ItemRealized">
+                            <command:EventToCommand  Command="{Binding DataContext.IssuesItemRealizedCommand, ElementName=ApplicationPage}" PassEventArgsToCommand="True"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <phone:LongListSelector.ItemTemplate>
                         <DataTemplate>
                             <Grid  Margin="0,0,0,17" toolkit:TiltEffect.IsTiltEnabled="true">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Tap">
+                                        <command:EventToCommand  Command="{Binding DataContext.IssueTapCommand, ElementName=ApplicationPage}"  CommandParameter="{Binding}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
                                 <StackPanel>
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="Tap">
-                                            <command:EventToCommand  Command="{Binding Main.IssueTapCommand,  Source={StaticResource Locator}}"  CommandParameter="{Binding}"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                    <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Style="{StaticResource PhoneTextLargeStyle}"/>
+                                   <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Style="{StaticResource PhoneTextLargeStyle}"/>
                                     <ProgressBar Value="{Binding DoneRatio}" IsIndeterminate="False" Maximum="100" Margin="0 5" Background="{StaticResource PhoneDisabledBrush}" Foreground="{StaticResource PhoneAccentBrush}"></ProgressBar>
                                     <TextBlock Text="{Binding Subject}" TextWrapping="Wrap" Margin="12,-6,12,0" Style="{StaticResource PhoneTextSubtleStyle}" Foreground="{StaticResource PhoneAccentBrush}"/>
                                     <Grid>
@@ -90,13 +96,18 @@
                 <phone:LongListSelector Margin="0,0,-12,0" ItemsSource="{Binding Projects}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="ItemRealized">
-                            <command:EventToCommand  Command="{Binding ProjectsItemRealizedCommand, Mode=TwoWay}" PassEventArgsToCommand="True"/>
+                            <command:EventToCommand  Command="{Binding DataContext.ProjectsItemRealizedCommand, ElementName=ApplicationPage}" PassEventArgsToCommand="True"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                     <phone:LongListSelector.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="12,0" toolkit:TiltEffect.IsTiltEnabled="true">
-                               <StackPanel Visibility="{Binding ShowLikeParent}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Tap">
+                                        <command:EventToCommand  Command="{Binding DataContext.ProjectTapCommand,  ElementName=ApplicationPage}"  CommandParameter="{Binding}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <StackPanel Visibility="{Binding ShowLikeParent}">
                                     <TextBlock Text="{Binding Name}" FontSize="{StaticResource PhoneFontSizeExtraLarge}" Foreground="{StaticResource PhoneForegroundBrush}"></TextBlock>
                                     <TextBlock Text="{Binding CreatedOnString}" FontSize="{StaticResource PhoneFontSizeNormal}" Foreground="{StaticResource PhoneDisabledBrush}"></TextBlock>
                                 </StackPanel>

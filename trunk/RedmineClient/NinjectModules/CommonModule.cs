@@ -11,6 +11,7 @@
 
     using RedmineClient.Data;
     using RedmineClient.Models.Models.Issues;
+    using RedmineClient.Models.Models.Projects;
     using RedmineClient.Proxy;
     using RedmineClient.Repositories.Abstract.DataBase;
     using RedmineClient.Repositories.Abstract.Service;
@@ -42,6 +43,7 @@
             this.Bind<MainViewModel>().ToSelf();
             this.Bind<LogOnViewModel>().ToSelf();
             this.Bind<IssueViewModel>().ToMethod(x => this.GetIssueViewModel());
+            this.Bind<ProjectViewModel>().ToMethod(x => this.GetProjectViewModel());
         }
 
         /// <summary>
@@ -73,6 +75,19 @@
                 this.Kernel.Get<IIssueStatusRepository>(),
                 this.Kernel.Get<IAccountRepository>(),
                 this.Kernel.Get<IPriorityRepository>());
+        }
+
+        /// <summary>
+        /// The get project view model.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ProjectViewModel"/>.
+        /// </returns>
+        private ProjectViewModel GetProjectViewModel()
+        {
+            var project = PhoneApplicationService.Current.State["selectedProject"] as Project;
+
+            return new ProjectViewModel(project, this.Kernel.Get<IIssueRepository>());
         }
     }
 }

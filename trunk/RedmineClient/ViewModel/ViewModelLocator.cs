@@ -75,6 +75,20 @@ namespace RedmineClient.ViewModel
             }
         }
 
+        /// <summary>
+        /// Gets the project.
+        /// </summary>
+        public ProjectViewModel Project
+        {
+            get
+            {
+                return this.kernel.Get<ProjectViewModel>();
+            }
+        }
+
+        /// <summary>
+        /// The cleanup.
+        /// </summary>
         public static void Cleanup()
         {
         }
