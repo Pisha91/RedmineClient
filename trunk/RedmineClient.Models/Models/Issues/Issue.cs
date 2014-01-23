@@ -7,6 +7,7 @@
 
     using Newtonsoft.Json;
 
+    using RedmineClient.Models.Models.Attachments;
     using RedmineClient.Models.Models.Common;
     using RedmineClient.Models.Models.Journal;
 
@@ -106,6 +107,12 @@
         public List<JournalItem> Journals { get; set; }
 
         /// <summary>
+        /// Gets or sets the attachments.
+        /// </summary>
+        [JsonProperty("attachments")]
+        public List<Attachment> Attachments { get; set; } 
+
+            /// <summary>
         /// Gets the description array.
         /// </summary>
         [JsonIgnore]

@@ -27,7 +27,7 @@
         /// Gets or sets the file size.
         /// </summary>
         [JsonProperty("filesize")]
-        public int FileSize { get; set; }
+        public long FileSize { get; set; }
 
         /// <summary>
         /// Gets or sets the content type.
@@ -58,5 +58,29 @@
         /// </summary>
         [JsonProperty("author")]
         public Label Author { get; set; }
+
+        /// <summary>
+        /// Gets the created on string.
+        /// </summary>
+        [JsonIgnore]
+        public string CreatedOnString
+        {
+            get
+            {
+                return this.CreatedOn.ToString("g");
+            }
+        }
+
+        /// <summary>
+        /// Gets the file size string.
+        /// </summary>
+        [JsonIgnore]
+        public string FileSizeString
+        {
+            get
+            {
+                return string.Format("{0} KB", this.FileSize / 1024);
+            }
+        }
     }
 }

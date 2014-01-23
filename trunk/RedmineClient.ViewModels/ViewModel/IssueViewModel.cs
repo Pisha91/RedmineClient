@@ -11,6 +11,7 @@
     using GalaSoft.MvvmLight.Messaging;
 
     using RedmineClient.Messanger.Messages.LogOn;
+    using RedmineClient.Models.Models.Attachments;
     using RedmineClient.Models.Models.Issues;
     using RedmineClient.Models.Models.Journal;
     using RedmineClient.Models.Models.Property;
@@ -163,6 +164,11 @@
         public ObservableCollection<JournalItem> History { get; set; }
 
         /// <summary>
+        /// Gets or sets the attachments.
+        /// </summary>
+        public ObservableCollection<Attachment> Attachments { get; set; } 
+
+        /// <summary>
         /// The update issue with history.
         /// </summary>
         private async void UpdateIssueWithHistory()
@@ -170,8 +176,9 @@
             RepositoryResponse<Issue> issueResponse = await this.issueRepository.GetIssue(this.selectedIssue.Id);
             if (issueResponse.StatusCode == HttpStatusCode.OK)
             {
-                this.selectedIssue = issueResponse.ResponseObject;
-                this.selectedIssue.Journals.Reverse();
+                this.SelectedIssue = issueResponse.ResponseObject;
+                this.SelectedIssue.Journals.Reverse();
+                this.Attachments = new ObservableCollection<Attachment>(issueResponse.ResponseObject.Attachments);
                 this.LoadUsers();
                 this.LoadStatuses();
                 this.LoadPriorities();
@@ -187,6 +194,7 @@
 
             this.loadingJournal = false;
             this.RaisePropertyChanged("ShowProgressBar");
+            this.RaisePropertyChanged("Attachments");
         }
 
         /// <summary>
