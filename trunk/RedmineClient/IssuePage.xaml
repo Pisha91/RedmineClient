@@ -1,4 +1,5 @@
 ﻿<phone:PhoneApplicationPage
+    x:Name="ApplicationPage"
     x:Class="RedmineClient.IssuePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -7,6 +8,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP8"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -197,8 +200,11 @@
                         <phone:LongListSelector.ItemTemplate>
                             <DataTemplate>
                                 <Grid toolkit:TiltEffect.IsTiltEnabled="True">
-
-
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Tap">
+                                            <command:EventToCommand  Command="{Binding DataContext.AttachmentTapCommand, ElementName=ApplicationPage}"  CommandParameter="{Binding}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="0.7*" />
                                         <ColumnDefinition Width="0.3*" />

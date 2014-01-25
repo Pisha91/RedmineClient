@@ -102,6 +102,9 @@
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether show progress bar.
+        /// </summary>
         public bool ShowProgressBar { get; set; }
 
         /// <summary>
@@ -132,13 +135,16 @@
         /// </summary>
         public async void LogIn()
         {
+            this.ShowProgressBar = true;
+            this.RaisePropertyChanged("ShowProgressBar");
             bool result = await this.accountRepository.LogIn(this.Host, this.Username, this.Password);
+            
             if (result)
             {
-                this.ShowProgressBar = true;
-                this.RaisePropertyChanged("ShowProgressBar");
                 Messenger.Default.Send(new MainMessage(this, new Uri("/MainPage.xaml", UriKind.Relative)));
             }
+            this.ShowProgressBar = false;
+            this.RaisePropertyChanged("ShowProgressBar");
         }
     }
 }

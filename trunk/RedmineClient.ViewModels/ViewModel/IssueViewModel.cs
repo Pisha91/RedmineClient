@@ -6,9 +6,13 @@
     using System.Linq;
     using System.Net;
     using System.Windows;
+    using System.Windows.Input;
 
     using GalaSoft.MvvmLight;
+    using GalaSoft.MvvmLight.Command;
     using GalaSoft.MvvmLight.Messaging;
+
+    using Microsoft.Phone.Tasks;
 
     using RedmineClient.Messanger.Messages.LogOn;
     using RedmineClient.Models.Models.Attachments;
@@ -18,6 +22,7 @@
     using RedmineClient.Models.Models.Status;
     using RedmineClient.Models.Models.Users;
     using RedmineClient.Models.Repository;
+    using RedmineClient.Repositories.Abstract.DataBase;
     using RedmineClient.Repositories.Abstract.Service;
 
     /// <summary>
@@ -44,6 +49,11 @@
         /// The account repository.
         /// </summary>
         private readonly IAccountRepository accountRepository;
+
+        /// <summary>
+        /// The user credentials repository.
+        /// </summary>
+        private readonly IUserCredentialsRepository userCredentialsRepository;
 
         /// <summary>
         /// The unauthorized.
@@ -76,6 +86,11 @@
         private Issue selectedIssue;
 
         /// <summary>
+        /// The attachment tap command.
+        /// </summary>
+        private RelayCommand<Attachment> attachmentTapCommand;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="IssueViewModel"/> class.
         /// </summary>
         /// <param name="selectedIssue">
@@ -93,18 +108,23 @@
         /// <param name="priorityRepository">
         /// The priority repository
         /// </param>
+        /// <param name="userCredentialsRepository">
+        /// The user Credentials Repository.
+        /// </param>
         public IssueViewModel(
             Issue selectedIssue, 
             IIssueRepository issueRepository, 
             IIssueStatusRepository issueStatusRepository, 
             IAccountRepository accountRepository, 
-            IPriorityRepository priorityRepository)
+            IPriorityRepository priorityRepository, 
+            IUserCredentialsRepository userCredentialsRepository)
         {
             this.selectedIssue = selectedIssue;
             this.issueRepository = issueRepository;
             this.issueStatusRepository = issueStatusRepository;
             this.accountRepository = accountRepository;
             this.priorityRepository = priorityRepository;
+            this.userCredentialsRepository = userCredentialsRepository;
 
             this.SetLoadingParameters();
             this.UpdateIssueWithHistory();
@@ -166,7 +186,34 @@
         /// <summary>
         /// Gets or sets the attachments.
         /// </summary>
-        public ObservableCollection<Attachment> Attachments { get; set; } 
+        public ObservableCollection<Attachment> Attachments { get; set; }
+
+        /// <summary>
+        /// Gets the attachment tap command.
+        /// </summary>
+        public ICommand AttachmentTapCommand
+        {
+            get
+            {
+                return this.attachmentTapCommand ?? (this.attachmentTapCommand = new RelayCommand<Attachment>(this.AttachmentTap));
+            }
+        }
+
+        /// <summary>
+        /// The attachment tap.
+        /// </summary>
+        /// <param name="attachment">
+        /// The attachment.
+        /// </param>
+        private void AttachmentTap(Attachment attachment)
+        {
+           string host = this.userCredentialsRepository.Get().Host;
+            string oldHost = attachment.ContentUrl.Substring(8, attachment.ContentUrl.Length - 8);
+            string url = attachment.ContentUrl.Substring(8 + oldHost.IndexOf("/", StringComparison.Ordinal), attachment.ContentUrl.Length - 8 - oldHost.IndexOf("/", StringComparison.Ordinal));
+            var webBrowserTask = new WebBrowserTask { Uri = new Uri(host + url, UriKind.Absolute) };
+            webBrowserTask.Show();
+
+        }
 
         /// <summary>
         /// The update issue with history.

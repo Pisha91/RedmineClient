@@ -74,7 +74,8 @@
                 this.Kernel.Get<IIssueRepository>(),
                 this.Kernel.Get<IIssueStatusRepository>(),
                 this.Kernel.Get<IAccountRepository>(),
-                this.Kernel.Get<IPriorityRepository>());
+                this.Kernel.Get<IPriorityRepository>(),
+                this.Kernel.Get<IUserCredentialsRepository>());
         }
 
         /// <summary>
