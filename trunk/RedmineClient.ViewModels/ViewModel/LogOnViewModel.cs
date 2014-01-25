@@ -125,8 +125,7 @@
         {
             get
             {
-                return this.logInCommand
-                       ?? (this.logInCommand = new RelayCommand(this.LogIn));
+                return this.logInCommand ?? (this.logInCommand = new RelayCommand(this.LogIn));
             }
         }
 

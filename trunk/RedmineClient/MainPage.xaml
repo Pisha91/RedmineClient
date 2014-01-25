@@ -56,7 +56,7 @@
                     </i:Interaction.Triggers>
                     <phone:LongListSelector.ItemTemplate>
                         <DataTemplate>
-                            <Grid  Margin="0,0,0,17" toolkit:TiltEffect.IsTiltEnabled="true">
+                            <Grid  Margin="0,0,0,17" toolkit:TiltEffect.IsTiltEnabled="true" Background="Transparent">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Tap">
                                         <command:EventToCommand  Command="{Binding DataContext.IssueTapCommand, ElementName=ApplicationPage}"  CommandParameter="{Binding}"/>
@@ -101,7 +101,7 @@
                     </i:Interaction.Triggers>
                     <phone:LongListSelector.ItemTemplate>
                         <DataTemplate>
-                            <Grid Margin="12,0" toolkit:TiltEffect.IsTiltEnabled="true">
+                            <Grid Margin="12,0" toolkit:TiltEffect.IsTiltEnabled="true" Background="Transparent">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Tap">
                                         <command:EventToCommand  Command="{Binding DataContext.ProjectTapCommand,  ElementName=ApplicationPage}"  CommandParameter="{Binding}"/>
