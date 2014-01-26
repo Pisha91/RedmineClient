@@ -42,6 +42,7 @@
 
             this.Bind<MainViewModel>().ToSelf();
             this.Bind<LogOnViewModel>().ToSelf();
+            this.Bind<ProfileViewModel>().ToSelf();
             this.Bind<IssueViewModel>().ToMethod(x => this.GetIssueViewModel());
             this.Bind<ProjectViewModel>().ToMethod(x => this.GetProjectViewModel());
         }

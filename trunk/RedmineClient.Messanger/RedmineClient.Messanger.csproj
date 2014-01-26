@@ -87,10 +87,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Messages\Back\BackMessage.cs" />
     <Compile Include="Messages\Base\BaseMessage.cs" />
     <Compile Include="Messages\Issue\IssueMessage.cs" />
     <Compile Include="Messages\LogOn\LogOnMessage.cs" />
     <Compile Include="Messages\Main\MainMessage.cs" />
+    <Compile Include="Messages\Profile\ProfileMessage.cs" />
     <Compile Include="Messages\Project\ProjectMessage.cs" />
     <Compile Include="Messanger\PageMessenger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -92,6 +92,7 @@
     <Compile Include="ViewModel\IssueViewModel.cs" />
     <Compile Include="ViewModel\LogOnViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\ProfileViewModel.cs" />
     <Compile Include="ViewModel\ProjectViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

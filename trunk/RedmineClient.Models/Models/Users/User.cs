@@ -62,5 +62,29 @@
         /// </summary>
         [JsonProperty("memberships")]
         public UserMembership[] Memberships { get; set; }
+
+        /// <summary>
+        /// Gets the created on string.
+        /// </summary>
+        [JsonIgnore]
+        public string CreatedOnString
+        {
+            get
+            {
+                return this.CreatedOn.ToString("g");
+            }
+        }
+
+        /// <summary>
+        /// Gets the last login on string.
+        /// </summary>
+        [JsonIgnore]
+        public string LastLoginOnString
+        {
+            get
+            {
+                return this.LastLoginOn.ToString("g");
+            }
+        }
     }
 }

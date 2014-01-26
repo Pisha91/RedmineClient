@@ -1,13 +1,17 @@
 ﻿namespace RedmineClient.Messanger.Messanger
 {
+    using System.Linq;
+
     using GalaSoft.MvvmLight.Messaging;
 
     using Microsoft.Phone.Controls;
     using Microsoft.Phone.Shell;
 
+    using RedmineClient.Messanger.Messages.Back;
     using RedmineClient.Messanger.Messages.Issue;
     using RedmineClient.Messanger.Messages.LogOn;
     using RedmineClient.Messanger.Messages.Main;
+    using RedmineClient.Messanger.Messages.Profile;
     using RedmineClient.Messanger.Messages.Project;
 
     /// <summary>
@@ -38,6 +42,7 @@
         {
             Messenger.Default.Register<MainMessage>(this, message => this.rootFrame.Navigate(message.Uri));
             Messenger.Default.Register<LogOnMessage>(this, message => this.rootFrame.Navigate(message.Uri));
+            Messenger.Default.Register<ProfileMessage>(this, message => this.rootFrame.Navigate(message.Uri));
 
             Messenger.Default.Register<IssueMessage>(
                 this,
@@ -53,6 +58,16 @@
                     {
                         PhoneApplicationService.Current.State["selectedProject"] = message.SelectedProject;
                         this.rootFrame.Navigate(message.Uri);
+                    });
+
+            Messenger.Default.Register<BackMessage>(
+                this,
+                message =>
+                    {
+                        while (this.rootFrame.BackStack.Any())
+                        {
+                            this.rootFrame.RemoveBackEntry();
+                        }
                     });
         }
     }

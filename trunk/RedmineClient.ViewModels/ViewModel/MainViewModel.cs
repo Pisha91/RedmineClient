@@ -14,8 +14,10 @@ namespace RedmineClient.ViewModels.ViewModel
 
     using Microsoft.Phone.Controls;
 
+    using RedmineClient.Messanger.Messages.Back;
     using RedmineClient.Messanger.Messages.Issue;
     using RedmineClient.Messanger.Messages.LogOn;
+    using RedmineClient.Messanger.Messages.Profile;
     using RedmineClient.Messanger.Messages.Project;
     using RedmineClient.Models.Models.Issues;
     using RedmineClient.Models.Models.Projects;
@@ -114,6 +116,11 @@ namespace RedmineClient.ViewModels.ViewModel
         private RelayCommand<ItemRealizationEventArgs> issuesItemRealized;
 
         /// <summary>
+        /// The profile click command.
+        /// </summary>
+        private RelayCommand profileClickCommand;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MainViewModel"/> class.
         /// </summary>
         /// <param name="issueRepository">
@@ -138,6 +145,7 @@ namespace RedmineClient.ViewModels.ViewModel
             this.SetLoadingParameters();
             this.GetIssues();
             this.GetProjects();
+            this.BackKeyPress();
         }
 
         /// <summary>
@@ -237,6 +245,30 @@ namespace RedmineClient.ViewModels.ViewModel
                 return this.issuesItemRealized
                        ?? (this.issuesItemRealized = new RelayCommand<ItemRealizationEventArgs>(this.IssuesItemRealized));
             }
+        }
+
+        /// <summary>
+        /// Gets the profile click command.
+        /// </summary>
+        public ICommand ProfileClickCommand
+        {
+            get
+            {
+                return this.profileClickCommand ?? (this.profileClickCommand = new RelayCommand(this.ProfileClick));
+            }
+        }
+
+        private void BackKeyPress()
+        {
+            Messenger.Default.Send(new BackMessage(this));
+        }
+
+        /// <summary>
+        /// The profile click.
+        /// </summary>
+        private void ProfileClick()
+        {
+            Messenger.Default.Send(new ProfileMessage(this, new Uri("/ProfilePage.xaml", UriKind.Relative)));
         }
 
         /// <summary>

@@ -1,15 +1,9 @@
 ﻿namespace RedmineClient
 {
-    using System.Windows;
+    using System;
     using System.Windows.Navigation;
 
-    using GalaSoft.MvvmLight.Messaging;
-
     using Microsoft.Phone.Controls;
-
-    using RedmineClient.Messanger.Messages.LogOn;
-
-    using GestureEventArgs = System.Windows.Input.GestureEventArgs;
 
     public partial class MainPage : PhoneApplicationPage
     {

@@ -10,7 +10,7 @@
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP8"
-    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:behaviors="clr-namespace:Cimbalino.Phone.Toolkit.Behaviors;assembly=Cimbalino.Phone.Toolkit"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -63,7 +63,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <StackPanel>
-                                   <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Style="{StaticResource PhoneTextLargeStyle}"/>
+                                    <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Style="{StaticResource PhoneTextLargeStyle}"/>
                                     <ProgressBar Value="{Binding DoneRatio}" IsIndeterminate="False" Maximum="100" Margin="0 5" Background="{StaticResource PhoneDisabledBrush}" Foreground="{StaticResource PhoneAccentBrush}"></ProgressBar>
                                     <TextBlock Text="{Binding Subject}" TextWrapping="Wrap" Margin="12,-6,12,0" Style="{StaticResource PhoneTextSubtleStyle}" Foreground="{StaticResource PhoneAccentBrush}"/>
                                     <Grid>
@@ -122,13 +122,13 @@
             </phone:PivotItem>
         </phone:Pivot>
 
-        <!--Uncomment to see an alignment grid to help ensure your controls are
-            aligned on common boundaries.  The image has a top margin of -32px to
-            account for the System Tray. Set this to 0 (or remove the margin altogether)
-            if the System Tray is hidden.
-
-            Before shipping remove this XAML and the image itself.-->
-        <!--<Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0,-32,0,0" Grid.Row="0" IsHitTestVisible="False" />-->
     </Grid>
+    <i:Interaction.Behaviors>
+        <behaviors:ApplicationBarBehavior Mode="Minimized">
+            <behaviors:ApplicationBarBehavior.MenuItems>
+                <behaviors:ApplicationBarMenuItem Command="{Binding ProfileClickCommand}" Text="profile"/>
+            </behaviors:ApplicationBarBehavior.MenuItems>
+        </behaviors:ApplicationBarBehavior>
+    </i:Interaction.Behaviors>
 
 </phone:PhoneApplicationPage>

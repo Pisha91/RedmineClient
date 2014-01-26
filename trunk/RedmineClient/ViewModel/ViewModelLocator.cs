@@ -87,6 +87,17 @@ namespace RedmineClient.ViewModel
         }
 
         /// <summary>
+        /// Gets the profile.
+        /// </summary>
+        public ProfileViewModel Profile
+        {
+            get
+            {
+                return this.kernel.Get<ProfileViewModel>();
+            }
+        }
+
+        /// <summary>
         /// The cleanup.
         /// </summary>
         public static void Cleanup()

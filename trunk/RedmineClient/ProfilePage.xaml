@@ -1,0 +1,49 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="RedmineClient.ProfilePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True"
+    DataContext="{Binding Source={StaticResource Locator}, Path=Profile}">
+    <shell:SystemTray.ProgressIndicator>
+        <shell:ProgressIndicator IsIndeterminate="{Binding ShowProgressBar}" IsVisible="True"/>
+    </shell:SystemTray.ProgressIndicator>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="Profile" Margin="12,0" FontSize="{StaticResource PhoneFontSizeExtraExtraLarge}" Foreground="{StaticResource PhoneForegroundBrush}"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <StackPanel Margin="12,0" Orientation="Vertical">
+                <TextBlock Text="First name" FontSize="{StaticResource PhoneFontSizeMediumLarge}" Foreground="{StaticResource PhoneDisabledBrush}"></TextBlock>
+                <TextBlock Text="{Binding Profile.FirstName}" FontSize="{StaticResource PhoneFontSizeMediumLarge}" Foreground="{StaticResource PhoneForegroundBrush}"></TextBlock>
+                <TextBlock Text="Last name" FontSize="{StaticResource PhoneFontSizeMediumLarge}" Foreground="{StaticResource PhoneDisabledBrush}"></TextBlock>
+                <TextBlock Text="{Binding Profile.LastName}" FontSize="{StaticResource PhoneFontSizeMediumLarge}" Foreground="{StaticResource PhoneForegroundBrush}"></TextBlock>
+                <TextBlock Text="Login" FontSize="{StaticResource PhoneFontSizeMediumLarge}" Foreground="{StaticResource PhoneDisabledBrush}"></TextBlock>
+                <TextBlock Text="{Binding Profile.Login}" FontSize="{StaticResource PhoneFontSizeMediumLarge}" Foreground="{StaticResource PhoneForegroundBrush}"></TextBlock>
+                <TextBlock Text="Last login" FontSize="{StaticResource PhoneFontSizeMediumLarge}" Foreground="{StaticResource PhoneDisabledBrush}"></TextBlock>
+                <TextBlock Text="{Binding Profile.LastLoginOnString}" FontSize="{StaticResource PhoneFontSizeMediumLarge}" Foreground="{StaticResource PhoneForegroundBrush}"></TextBlock>
+                <TextBlock Text="Created" FontSize="{StaticResource PhoneFontSizeMediumLarge}" Foreground="{StaticResource PhoneDisabledBrush}"></TextBlock>
+                <TextBlock Text="{Binding Profile.CreatedOnString}" FontSize="{StaticResource PhoneFontSizeMediumLarge}" Foreground="{StaticResource PhoneForegroundBrush}"></TextBlock>
+            </StackPanel>
+        </Grid>
+    </Grid>
+
+</phone:PhoneApplicationPage>
