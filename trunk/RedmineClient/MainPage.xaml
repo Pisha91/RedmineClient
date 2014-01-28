@@ -44,7 +44,7 @@
          -->
 
         <!--Pivot Control-->
-        <phone:Pivot Title="Redmine client">
+        <phone:Pivot Title="Redmine">
             <!--Pivot item one-->
             <phone:PivotItem Header="my page">
                 <!--Double line list with text wrapping-->
@@ -124,7 +124,7 @@
 
     </Grid>
     <i:Interaction.Behaviors>
-        <behaviors:ApplicationBarBehavior Mode="Minimized">
+        <behaviors:ApplicationBarBehavior Mode="Minimized" Opacity="0.5">
             <behaviors:ApplicationBarBehavior.MenuItems>
                 <behaviors:ApplicationBarMenuItem Command="{Binding ProfileClickCommand}" Text="profile"/>
             </behaviors:ApplicationBarBehavior.MenuItems>

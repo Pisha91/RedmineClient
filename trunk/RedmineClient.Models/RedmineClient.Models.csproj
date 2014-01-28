@@ -89,6 +89,7 @@
   <ItemGroup>
     <Compile Include="Models\Attachments\Attachment.cs" />
     <Compile Include="Models\Common\Label.cs" />
+    <Compile Include="Models\Issues\SubIssue.cs" />
     <Compile Include="Models\Projects\Project.cs" />
     <Compile Include="Models\Projects\ProjectsResponse.cs" />
     <Compile Include="Models\Property\Priority.cs" />

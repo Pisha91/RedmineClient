@@ -14,6 +14,7 @@
 
     using Microsoft.Phone.Tasks;
 
+    using RedmineClient.Messanger.Messages.Issue;
     using RedmineClient.Messanger.Messages.LogOn;
     using RedmineClient.Models.Models.Attachments;
     using RedmineClient.Models.Models.Issues;
@@ -91,6 +92,11 @@
         private RelayCommand<Attachment> attachmentTapCommand;
 
         /// <summary>
+        /// The sub issue tap command.
+        /// </summary>
+        private RelayCommand<SubIssue> subIssueTapCommand;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="IssueViewModel"/> class.
         /// </summary>
         /// <param name="selectedIssue">
@@ -112,11 +118,11 @@
         /// The user Credentials Repository.
         /// </param>
         public IssueViewModel(
-            Issue selectedIssue, 
-            IIssueRepository issueRepository, 
-            IIssueStatusRepository issueStatusRepository, 
-            IAccountRepository accountRepository, 
-            IPriorityRepository priorityRepository, 
+            Issue selectedIssue,
+            IIssueRepository issueRepository,
+            IIssueStatusRepository issueStatusRepository,
+            IAccountRepository accountRepository,
+            IPriorityRepository priorityRepository,
             IUserCredentialsRepository userCredentialsRepository)
         {
             this.selectedIssue = selectedIssue;
@@ -200,6 +206,17 @@
         }
 
         /// <summary>
+        /// Gets the sub issue tap command.
+        /// </summary>
+        public ICommand SubIssueTapCommand
+        {
+            get
+            {
+                return this.subIssueTapCommand ?? (this.subIssueTapCommand = new RelayCommand<SubIssue>(this.SubIssueTap));
+            }
+        }
+
+        /// <summary>
         /// The attachment tap.
         /// </summary>
         /// <param name="attachment">
@@ -207,12 +224,23 @@
         /// </param>
         private void AttachmentTap(Attachment attachment)
         {
-           string host = this.userCredentialsRepository.Get().Host;
+            string host = this.userCredentialsRepository.Get().Host;
             string oldHost = attachment.ContentUrl.Substring(8, attachment.ContentUrl.Length - 8);
             string url = attachment.ContentUrl.Substring(8 + oldHost.IndexOf("/", StringComparison.Ordinal), attachment.ContentUrl.Length - 8 - oldHost.IndexOf("/", StringComparison.Ordinal));
             var webBrowserTask = new WebBrowserTask { Uri = new Uri(host + url, UriKind.Absolute) };
             webBrowserTask.Show();
 
+        }
+
+        /// <summary>
+        /// The sub issue tap.
+        /// </summary>
+        /// <param name="subIssue">
+        /// The sub issue.
+        /// </param>
+        private void SubIssueTap(SubIssue subIssue)
+        {
+            Messenger.Default.Send(new IssueMessage(new Issue { Id = subIssue.Id, Project = this.SelectedIssue.Project, HideContent = true }, new Uri("/IssuePage.xaml?Id=" + subIssue.Id, UriKind.Relative)));
         }
 
         /// <summary>

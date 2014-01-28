@@ -110,7 +110,31 @@
         /// Gets or sets the attachments.
         /// </summary>
         [JsonProperty("attachments")]
-        public List<Attachment> Attachments { get; set; } 
+        public List<Attachment> Attachments { get; set; }
+
+        /// <summary>
+        /// Gets or sets the children.
+        /// </summary>
+        [JsonProperty("children")]
+        public List<SubIssue> Children { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether hide content.
+        /// </summary>
+        [JsonIgnore]
+        public bool HideContent { get; set; }
+
+        /// <summary>
+        /// Gets the hide content string.
+        /// </summary>
+        [JsonIgnore]
+        public string HideContentString
+        {
+            get
+            {
+                return this.HideContent ? "Collapsed" : "Visible";
+            }
+        }
 
             /// <summary>
         /// Gets the description array.
@@ -120,7 +144,7 @@
         {
             get
             {
-               return this.Description.Replace("\r", string.Empty).Split(new[] { '\n' }).ToList();
+                return this.Description == null ? new List<string>() : this.Description.Replace("\r", string.Empty).Split(new[] { '\n' }).ToList();
             }
         }
 
@@ -178,7 +202,9 @@
         {
             get
             {
-                return string.Format("{0} #{1} ({2}%)", this.Tracker.Name, this.Id, this.DoneRatio);
+                return this.Tracker == null
+                           ? string.Empty
+                           : string.Format("{0} #{1} ({2}%)", this.Tracker.Name, this.Id, this.DoneRatio);
             }
         }
 

@@ -185,7 +185,7 @@
                     Password = userCredentials.Password
                 };
 
-                var response = await this.WebClient.Get(string.Format("issues/{0}.json?include=journals,attachments", id), requestModel);
+                var response = await this.WebClient.Get(string.Format("issues/{0}.json?include=journals,attachments,children", id), requestModel);
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsStringAsync();
