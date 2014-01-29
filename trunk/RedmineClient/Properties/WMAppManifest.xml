@@ -1,38 +1,60 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
-  <DefaultLanguage xmlns="" code="en-US"/>
-  <App xmlns="" ProductID="{3f063cec-8be6-4e79-a984-0639bcae2750}" Title="RedmineClient" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal"  Author="RedmineClient author" Description="Sample description" Publisher="RedmineClient" PublisherID="{52d95b2e-f010-4c3b-a5af-a47688cba636}">
-    <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
+  <DefaultLanguage xmlns="" code="en-US" />
+  <Languages xmlns="">
+    <Language code="en-GB" />
+    <Language code="en-US" />
+    <Language code="en-TT" />
+    <Language code="en-ZA" />
+    <Language code="en-SG" />
+    <Language code="en-PH" />
+    <Language code="en-NZ" />
+    <Language code="en-MY" />
+    <Language code="en-JM" />
+    <Language code="en-IE" />
+    <Language code="en-IN" />
+    <Language code="en-HK" />
+    <Language code="en-029" />
+    <Language code="en-CA" />
+    <Language code="en-BZ" />
+    <Language code="en-AU" />
+    <Language code="en" />
+  </Languages>
+  <App xmlns="" ProductID="{3f063cec-8be6-4e79-a984-0639bcae2750}" Title="Redmine" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="Pisha91" Description="Sample description" Publisher="Pisha91" PublisherID="{52d95b2e-f010-4c3b-a5af-a47688cba636}">
+    <IconPath IsRelative="true" IsResource="false">redmine_fluid_icon.png</IconPath>
     <Capabilities>
-      <Capability Name="ID_CAP_NETWORKING"/>
-      <Capability Name="ID_CAP_MEDIALIB_AUDIO"/>
-      <Capability Name="ID_CAP_MEDIALIB_PLAYBACK"/>
-      <Capability Name="ID_CAP_SENSORS"/>
-      <Capability Name="ID_CAP_WEBBROWSERCOMPONENT"/>
+      <Capability Name="ID_CAP_NETWORKING" />
+      <Capability Name="ID_CAP_MEDIALIB_AUDIO" />
+      <Capability Name="ID_CAP_MEDIALIB_PLAYBACK" />
+      <Capability Name="ID_CAP_SENSORS" />
+      <Capability Name="ID_CAP_WEBBROWSERCOMPONENT" />
     </Capabilities>
     <Tasks>
-      <DefaultTask  Name ="_default" NavigationPage="MainPage.xaml"/>
+      <DefaultTask Name="_default" NavigationPage="MainPage.xaml" />
     </Tasks>
     <Tokens>
       <PrimaryToken TokenID="RedmineClientToken" TaskName="_default">
         <TemplateFlip>
-          <SmallImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileSmall.png</SmallImageURI>
+          <SmallImageURI IsRelative="true" IsResource="false">redmine_fluid_icon.png</SmallImageURI>
           <Count>0</Count>
-          <BackgroundImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileMedium.png</BackgroundImageURI>
-          <Title>RedmineClient</Title>
-          <BackContent></BackContent>
-          <BackBackgroundImageURI></BackBackgroundImageURI>
-          <BackTitle></BackTitle>
-          <DeviceLockImageURI></DeviceLockImageURI>
-          <HasLarge></HasLarge>
+          <BackgroundImageURI IsRelative="true" IsResource="false">redmine_fluid_icon.png</BackgroundImageURI>
+          <Title>Redmine</Title>
+          <BackContent>
+          </BackContent>
+          <BackBackgroundImageURI>
+          </BackBackgroundImageURI>
+          <BackTitle>
+          </BackTitle>
+          <DeviceLockImageURI>
+          </DeviceLockImageURI>
+          <HasLarge>False</HasLarge>
         </TemplateFlip>
       </PrimaryToken>
     </Tokens>
     <ScreenResolutions>
-      <ScreenResolution Name="ID_RESOLUTION_WVGA"/>
-      <ScreenResolution Name="ID_RESOLUTION_WXGA"/>
-      <ScreenResolution Name="ID_RESOLUTION_HD720P"/>
+      <ScreenResolution Name="ID_RESOLUTION_WVGA" />
+      <ScreenResolution Name="ID_RESOLUTION_WXGA" />
+      <ScreenResolution Name="ID_RESOLUTION_HD720P" />
     </ScreenResolutions>
   </App>
 </Deployment>
