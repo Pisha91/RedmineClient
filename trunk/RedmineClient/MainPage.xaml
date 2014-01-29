@@ -48,7 +48,7 @@
             <!--Pivot item one-->
             <phone:PivotItem Header="my page">
                 <!--Double line list with text wrapping-->
-                <phone:LongListSelector Margin="0,0,-12,0" ItemsSource="{Binding Issues}">
+                <phone:LongListSelector Margin="0,0,-12,30" ItemsSource="{Binding Issues}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="ItemRealized">
                             <command:EventToCommand  Command="{Binding DataContext.IssuesItemRealizedCommand, ElementName=ApplicationPage}" PassEventArgsToCommand="True"/>
@@ -93,7 +93,7 @@
 
             <!--Pivot item two-->
             <phone:PivotItem Header="projects">
-                <phone:LongListSelector Margin="0,0,-12,0" ItemsSource="{Binding Projects}">
+                <phone:LongListSelector Margin="0,0,-12,30" ItemsSource="{Binding Projects}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="ItemRealized">
                             <command:EventToCommand  Command="{Binding DataContext.ProjectsItemRealizedCommand, ElementName=ApplicationPage}" PassEventArgsToCommand="True"/>
@@ -124,7 +124,7 @@
 
     </Grid>
     <i:Interaction.Behaviors>
-        <behaviors:ApplicationBarBehavior Mode="Minimized" Opacity="0.5">
+        <behaviors:ApplicationBarBehavior Mode="Minimized" Opacity="0.8">
             <behaviors:ApplicationBarBehavior.MenuItems>
                 <behaviors:ApplicationBarMenuItem Command="{Binding ProfileClickCommand}" Text="profile"/>
             </behaviors:ApplicationBarBehavior.MenuItems>

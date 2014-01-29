@@ -46,61 +46,73 @@
             <!--Pivot item details-->
             <phone:PivotItem Header="details">
                 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                    <Grid>
-                        <StackPanel Visibility="{Binding SelectedIssue.HideContentString}">
-                            <TextBlock Margin="12 5 12 0" TextWrapping="Wrap" Text="{Binding SelectedIssue.Subject}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeLarge}"></TextBlock>
-                            <TextBlock Margin="12 5 12 0" Text="{Binding SelectedIssue.TrackerWithPercentString}" Foreground="{StaticResource PhoneAccentBrush}" FontSize="{StaticResource PhoneFontSizeLarge}"></TextBlock>
-                            <ProgressBar Value="{Binding SelectedIssue.DoneRatio}" IsIndeterminate="False" Maximum="100" Margin="0 5" Background="{StaticResource PhoneDisabledBrush}" Foreground="{StaticResource PhoneAccentBrush}"></ProgressBar>
-
-                            <TextBlock  Margin="12 5 12 0" Text="done" Foreground="{StaticResource PhoneDisabledBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"/>
-                            <StackPanel Orientation="Horizontal" Margin="12 5 12 0">
-                                <TextBlock Text="{Binding SelectedIssue.DoneRatio}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
-                                <TextBlock Text="%" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
+                    <StackPanel Visibility="{Binding SelectedIssue.HideContentString}">
+                        <TextBlock Margin="12 5 12 0" TextWrapping="Wrap" Text="{Binding SelectedIssue.Subject}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeLarge}"></TextBlock>
+                        <TextBlock Margin="12 5 12 0" Text="{Binding SelectedIssue.TrackerWithPercentString}" Foreground="{StaticResource PhoneAccentBrush}" FontSize="{StaticResource PhoneFontSizeLarge}"></TextBlock>
+                        <ProgressBar Value="{Binding SelectedIssue.DoneRatio}" IsIndeterminate="False" Maximum="100" Margin="0 5" Background="{StaticResource PhoneDisabledBrush}" Foreground="{StaticResource PhoneAccentBrush}"></ProgressBar>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="0" Grid.Column="0">
+                                <TextBlock  Margin="12 5 12 0" Text="status" Foreground="{StaticResource PhoneDisabledBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
+                                <TextBlock Margin="12 5 12 0" Text="{Binding SelectedIssue.Status.Name}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
                             </StackPanel>
-                            <TextBlock  Margin="12 5 12 0" Text="status" Foreground="{StaticResource PhoneDisabledBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
-                            <TextBlock Margin="12 5 12 0" Text="{Binding SelectedIssue.Status.Name}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
-
-                            <TextBlock  Margin="12 5 12 0" Text="priority" Foreground="{StaticResource PhoneDisabledBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
-                            <TextBlock Margin="12 5 12 0" Text="{Binding SelectedIssue.Priority.Name}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
-
-                            <TextBlock  Margin="12 5 12 0" Text="assigne" Foreground="{StaticResource PhoneDisabledBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
-                            <TextBlock Margin="12 5 12 0" Text="{Binding SelectedIssue.AssignedTo.Name}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
-
-                            <TextBlock  Margin="12 5 12 0" Text="start date" Foreground="{StaticResource PhoneDisabledBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
-                            <TextBlock Margin="12 5 12 0" Text="{Binding SelectedIssue.StartDateString}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
-
-                            <TextBlock  Margin="12 5 12 0" Text="due date" Foreground="{StaticResource PhoneDisabledBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
-                            <TextBlock Margin="12 5 12 0" Text="{Binding SelectedIssue.DueDateString}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
-
-                            <TextBlock  Margin="12 5 12 0" Text="author" Foreground="{StaticResource PhoneDisabledBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
-                            <TextBlock Margin="12 5 12 0" Text="{Binding SelectedIssue.Author.Name}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
-
-                            <TextBlock  Margin="12 5 12 0" Text="create date" Foreground="{StaticResource PhoneDisabledBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
-                            <TextBlock Margin="12 5 12 0" Text="{Binding SelectedIssue.CreatedOnString}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
-
-                            <TextBlock  Margin="12 5 12 0" Text="update date" Foreground="{StaticResource PhoneDisabledBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
-                            <TextBlock Margin="12 5 12 10" Text="{Binding SelectedIssue.UpdatedOnString}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
-
-                            <StackPanel Margin="12 5 12 30">
-                                <TextBlock Margin="0 0 0 5" Text="Subtasks" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeLarge}"/>
-                                <ListBox ItemsSource="{Binding SelectedIssue.Children}">
-                                    <ListBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Margin="0 5" Orientation="Vertical" toolkit:TiltEffect.IsTiltEnabled="True">
-                                                <i:Interaction.Triggers>
-                                                    <i:EventTrigger EventName="Tap">
-                                                        <command:EventToCommand  Command="{Binding DataContext.SubIssueTapCommand, ElementName=ApplicationPage}"  CommandParameter="{Binding}"/>
-                                                    </i:EventTrigger>
-                                                </i:Interaction.Triggers>
-                                                <TextBlock Text="{Binding Title}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
-                                                <TextBlock Text="{Binding Subject}" Foreground="{StaticResource PhoneAccentBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"/>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </ListBox.ItemTemplate>
-                                </ListBox>
+                            <StackPanel Grid.Row="0" Grid.Column="1">
+                                <TextBlock  Margin="12 5 12 0" Text="priority" Foreground="{StaticResource PhoneDisabledBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
+                                <TextBlock Margin="12 5 12 0" Text="{Binding SelectedIssue.Priority.Name}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
                             </StackPanel>
+                            <StackPanel Grid.Row="1" Grid.Column="0">
+                                <TextBlock  Margin="12 5 12 0" Text="start date" Foreground="{StaticResource PhoneDisabledBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
+                                <TextBlock Margin="12 5 12 0" Text="{Binding SelectedIssue.StartDateString}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Grid.Column="1">
+                                <TextBlock  Margin="12 5 12 0" Text="due date" Foreground="{StaticResource PhoneDisabledBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
+                                <TextBlock Margin="12 5 12 0" Text="{Binding SelectedIssue.DueDateString}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="2" Grid.Column="0">
+                                <TextBlock  Margin="12 5 12 0" Text="created" Foreground="{StaticResource PhoneDisabledBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
+                                <TextBlock Margin="12 5 12 0" Text="{Binding SelectedIssue.CreatedOnString}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="2" Grid.Column="1">
+                                <TextBlock  Margin="12 5 12 0" Text="updated" Foreground="{StaticResource PhoneDisabledBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
+                                <TextBlock Margin="12 5 12 10" Text="{Binding SelectedIssue.UpdatedOnString}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+                                <TextBlock  Margin="12 5 12 0" Text="assigne" Foreground="{StaticResource PhoneDisabledBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
+                                <TextBlock Margin="12 5 12 0" Text="{Binding SelectedIssue.AssignedTo.Name}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
+                                <TextBlock  Margin="12 5 12 0" Text="author" Foreground="{StaticResource PhoneDisabledBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
+                                <TextBlock Margin="12 5 12 0" Text="{Binding SelectedIssue.Author.Name}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <StackPanel Margin="12 5 12 30">
+                            <TextBlock Margin="0 0 0 5" Text="subtasks" Foreground="{StaticResource PhoneDisabledBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
+                            <ListBox ItemsSource="{Binding SelectedIssue.Children}" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Margin="0 5" Orientation="Vertical" toolkit:TiltEffect.IsTiltEnabled="True" Background="Transparent">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Tap">
+                                                    <command:EventToCommand  Command="{Binding DataContext.SubIssueTapCommand, ElementName=ApplicationPage}"  CommandParameter="{Binding}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                            <TextBlock Text="{Binding Title}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
+                                            <TextBlock Text="{Binding Subject}" Foreground="{StaticResource PhoneAccentBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
                         </StackPanel>
-                    </Grid>
+                        
+                    </StackPanel>
                 </ScrollViewer>
             </phone:PivotItem>
 
@@ -226,8 +238,8 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="0.7*" />
-                                        <ColumnDefinition Width="0.3*" />
+                                        <ColumnDefinition Width="0.65*" />
+                                        <ColumnDefinition Width="0.35*" />
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition></RowDefinition>

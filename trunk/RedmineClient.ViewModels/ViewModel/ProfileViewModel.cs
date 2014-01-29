@@ -82,6 +82,17 @@
         public bool ShowProgressBar { get; set; }
 
         /// <summary>
+        /// Gets the show profile.
+        /// </summary>
+        public string ShowProfile
+        {
+            get
+            {
+                return this.ShowProgressBar ? "Collapsed" : "Visible";
+            }
+        }
+
+        /// <summary>
         /// The set profile.
         /// </summary>
         private async void SetProfile()
@@ -104,6 +115,7 @@
 
             this.ShowProgressBar = false;
             this.RaisePropertyChanged("ShowProgressBar");
+            this.RaisePropertyChanged("ShowProfile");
             this.RaisePropertyChanged("Profile");
         }
     }

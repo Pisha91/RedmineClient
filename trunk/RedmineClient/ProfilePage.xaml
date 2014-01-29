@@ -31,7 +31,7 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <StackPanel Margin="12,0" Orientation="Vertical">
+            <StackPanel Margin="12,0" Orientation="Vertical" Visibility="{Binding ShowProfile}">
                 <TextBlock Text="First name" FontSize="{StaticResource PhoneFontSizeMediumLarge}" Foreground="{StaticResource PhoneDisabledBrush}"></TextBlock>
                 <TextBlock Text="{Binding Profile.FirstName}" FontSize="{StaticResource PhoneFontSizeMediumLarge}" Foreground="{StaticResource PhoneForegroundBrush}"></TextBlock>
                 <TextBlock Text="Last name" FontSize="{StaticResource PhoneFontSizeMediumLarge}" Foreground="{StaticResource PhoneDisabledBrush}"></TextBlock>
