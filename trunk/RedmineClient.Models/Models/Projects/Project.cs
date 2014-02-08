@@ -1,7 +1,6 @@
 ﻿namespace RedmineClient.Models.Models.Projects
 {
     using System;
-    using System.Globalization;
 
     using Newtonsoft.Json;
 

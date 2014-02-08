@@ -24,6 +24,7 @@ namespace RedmineClient.ViewModels.ViewModel
     using RedmineClient.Models.Models.Users;
     using RedmineClient.Models.Repository;
     using RedmineClient.Repositories.Abstract.Service;
+    using RedmineClient.ViewModels.Resources;
 
     /// <summary>
     /// The main view model.
@@ -84,6 +85,16 @@ namespace RedmineClient.ViewModels.ViewModel
         /// The loading projects.
         /// </summary>
         private bool loadingProjects;
+
+        /// <summary>
+        /// The load issues error.
+        /// </summary>
+        private bool loadIssuesError;
+
+        /// <summary>
+        /// The load projects error.
+        /// </summary>
+        private bool loadProjectsError;
 
         /// <summary>
         /// The issues.
@@ -156,6 +167,92 @@ namespace RedmineClient.ViewModels.ViewModel
             get
             {
                 return this.loadingProjects || this.loadingIssues;
+            }
+        }
+
+        /// <summary>
+        /// Gets the show issues.
+        /// </summary>
+        public string ShowIssues
+        {
+            get
+            {
+                if (this.Issues == null)
+                {
+                    return "Collapsed";
+                }
+
+                return this.Issues.Count > 0 ? "Visible" : "Collapsed";
+            }
+        }
+
+        /// <summary>
+        /// Gets the show warning message.
+        /// </summary>
+        public string ShowIssuesWarningMessage
+        {
+            get
+            {
+                if (this.Issues == null)
+                {
+                    return "Collapsed";
+                }
+
+                return this.Issues.Count > 0 ? "Collapsed" : "Visible";
+            }
+        }
+
+        /// <summary>
+        /// Gets the show projects.
+        /// </summary>
+        public string ShowProjects
+        {
+            get
+            {
+                if (this.Projects == null)
+                {
+                    return "Collapsed";
+                }
+
+                return this.Projects.Count > 0 ? "Visible" : "Collapsed";
+            }
+        }
+
+        /// <summary>
+        /// Gets the show project warning message.
+        /// </summary>
+        public string ShowProjectsWarningMessage
+        {
+            get
+            {
+                if (this.Projects == null)
+                {
+                    return "Collapsed";
+                }
+
+                return this.Projects.Count > 0 ? "Collapsed" : "Visible";
+            }
+        }
+
+        /// <summary>
+        /// Gets the no data message.
+        /// </summary>
+        public string IssuesMessage
+        {
+            get
+            {
+                return this.loadIssuesError ? DisplayResource.IssuesNoConnectionMessage : DisplayResource.NoDataMessage;
+            }
+        }
+
+        /// <summary>
+        /// Gets the projects message.
+        /// </summary>
+        public string ProjectsMessage
+        {
+            get
+            {
+                return this.loadProjectsError ? DisplayResource.IssuesNoConnectionMessage : DisplayResource.NoDataMessage;
             }
         }
 
@@ -258,6 +355,9 @@ namespace RedmineClient.ViewModels.ViewModel
             }
         }
 
+        /// <summary>
+        /// The back key press.
+        /// </summary>
         private void BackKeyPress()
         {
             Messenger.Default.Send(new BackMessage(this));
@@ -368,12 +468,16 @@ namespace RedmineClient.ViewModels.ViewModel
             }
             else
             {
-                MessageBox.Show(userResponse.Message);
+                this.loadIssuesError = true;
+                this.issues = new ObservableCollection<Issue>();
             }
 
             this.loadingIssues = false;
             this.RaisePropertyChanged("Issues");
             this.RaisePropertyChanged("ShowProgressBar");
+            this.RaisePropertyChanged("ShowIssuesWarningMessage");
+            this.RaisePropertyChanged("ShowIssues");
+            this.RaisePropertyChanged("IssuesMessage");
         }
 
         /// <summary>
@@ -408,12 +512,16 @@ namespace RedmineClient.ViewModels.ViewModel
             }
             else
             {
-                MessageBox.Show(projectResponse.Message);
+                this.loadProjectsError = true;
+                this.projects = new ObservableCollection<Project>();
             }
 
             this.loadingProjects = false;
             this.RaisePropertyChanged("Projects");
             this.RaisePropertyChanged("ShowProgressBar");
+            this.RaisePropertyChanged("ShowProjectsWarningMessage");
+            this.RaisePropertyChanged("ShowProjects");
+            this.RaisePropertyChanged("ProjectsMessage");
         }
 
         /// <summary>
